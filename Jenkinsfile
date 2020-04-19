@@ -1,39 +1,43 @@
 pipeline {
-    agent {label 'WindowsSlave'}
+    agent any
 
     stages {
         stage ('Git Fetch Stage') {
             steps{
-                git credentialsId: 'bd97a44a-e6f1-4982-98f4-cd71e2067884', url: 'git@code.siemens.com:mytestprojectsgroup/maventestproject.git'
+                echo "Git Stage"
             }
         }
         stage ('Compile Stage') {
             steps{
-                bat "mvn clean compile"
+			    echo "Compile Stage"
+                //sh "mvn clean compile"
             }
         }
         stage ('Test Stage'){
 	        parallel{
 		        stage('Test Compile Stage'){
 			        steps{
-					    bat 'mvn test-compile'
+					    echo "Compile Stage in Paralle;"
+					    //sh 'mvn test-compile'
 			        }
 		        }
 		        stage('Test Cases Stage'){
 			        steps{
-					    bat 'mvn test'
+						echo "Test Case Stage in Parallel"
+					    //sh 'mvn test'
 			        }
 		        }
 	        }
         }
         stage ('Build Stage'){
             steps{
-                bat 'mvn install'
+				echo "Build Stage"
+                //sh 'mvn install'
             }
         }
         stage ('SonarQube Analysis Stage'){
             steps{
-                bat 'mvn sonar:sonar -Dsonar.host.url=http://inakr06958wspr.ad001.siemens.net:9000 -Dsonar.login=admin -Dsonar.password=moladmin -Dsonar.projectKey=testing.jenkins.slave -Dsonar.projectName="Jenkins Slave Test" -Dsonar.projectVersion=2.0'
+				echo "SonarQube Stage"
             }
         }
     }
