@@ -6,12 +6,13 @@ pipeline {
     }
 
     stages {
-        stage ('Git Fetch Stage') {
-            steps{
-                echo "Git Stage"
-                git 'https://github.com/Aman10Siemens/Maven-Jenkins-Pipeline.git'
-            }
-        }
+//       stage ('Git Fetch Stage') {
+//            steps{
+//                echo "Git Stage"
+//                git 'https://github.com/Aman10Siemens/Maven-Jenkins-Pipeline.git'
+//            }
+//        }
+//       This stage is not required if JenkinsFile is present in fetched from SCM
         stage ('Compile Stage') {
             steps{
 			    echo "Compile Stage"
